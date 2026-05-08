@@ -30,7 +30,7 @@ function App() {
 
     try {
       // Call the Flask backend
-      const response = await fetch('http://localhost:5000/api/solve', {
+      const response = await fetch('http://127.0.0.1:5000/api/solve', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,7 +43,8 @@ function App() {
       });
 
       if (!response.ok) {
-        throw new Error('Backend server is not responding correctly.');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Backend server is not responding correctly.');
       }
 
       const data = await response.json();
